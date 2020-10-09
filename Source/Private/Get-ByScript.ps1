@@ -8,7 +8,7 @@ function Get-ByScript {
         Start-Process -Wait -Verb RunAs -FilePath powershell -ArgumentList "-c", $script, $item.parameters
     } else {
         $block = [Scriptblock]::Create($script)
-        Invoke-Command -ScriptBlock $block -ArgumentList $item.parameters
+        Invoke-Command -ScriptBlock $block
     }
     Write-Host ("{0}: Installation complete." -f $item.name)
 }
