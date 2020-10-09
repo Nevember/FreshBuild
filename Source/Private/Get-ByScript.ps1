@@ -9,14 +9,22 @@ function Get-ByScript {
         if($item.parameters) {
             $argList += $item.parameters;
         }
-        Start-Process -Wait -Verb RunAs -FilePath powershell -ArgumentList $argList
+        try{
+            Start-Process -Wait -Verb RunAs -FilePath powershell -ArgumentList $argList
+        } catch {
+            Write-Error $_
+        }
     } else {
         $block = [Scriptblock]::Create($script)
         $arglist = @();
         if($item.parameters) {
             $argList += $item.parameters;
         }
-        Invoke-Command -ScriptBlock $block
+        try{
+            Invoke-Command -ScriptBlock $block
+        } catch {
+            Write-Error $_
+        }
     }
     Write-Host ("{0}: Installation complete." -f $item.name)
 }
