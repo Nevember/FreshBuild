@@ -1,9 +1,11 @@
-function Get-ByWinget {
+function Get-ByChocolatey {
     param(
         [PSObject]$Item=$null
     )
-    if($item.command -ne 'cinst') { throw ("Wrong method.  Expected 'cinst', received '{0}'" -f $item.command)}
-    $command = (Get-Command $item.command).Source;
+    $command = (Get-Command cinst).Source;
+
+    $parameters = @("install", $item.name, $item.parameters)
+
     if($command) {
         if($item.elevate){
             return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $parameters

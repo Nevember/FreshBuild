@@ -2,8 +2,8 @@ function Get-ByWinget {
     param(
         [PSObject]$Item=$null
     )
-    if($item.command -ne 'winget') { throw ("Wrong method.  Expected 'winget', received '{0}'" -f $item.command)}
-    $command = (Get-Command $item.command).Source;
+    $command = (Get-Command winget).Source;
+    $parameters = @("install", $item.name, $item.parameters)
     if($command) {
         if($item.elevate){
             return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $parameters
