@@ -3,8 +3,7 @@ function Start-FreshBuild {
     param(
         [string]$jsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json",
         [string]$Exclude = $null,
-        [string]$Include = $null,
-        [switch]$Search = $false
+        [string]$Include = $null
     )
 
     Push-Location
@@ -13,18 +12,18 @@ function Start-FreshBuild {
         $defaultJsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json";
 
         if (-not (Test-Path $jsonConfig)) {
-            if ($hsonConfig -eq $defaultJsonConfig) {
+            if ($jsonConfig -eq $defaultJsonConfig) {
                 Set-Location (Get-Module -Name "FreshBuild").Path
-                New-Item $env:USERPROFILE/.freshBuild -ItemType Directory
-                New-Item $env:USERPROFILE/.freshBuild/.vs_answers -ItemType Directory
-                Copy-Item en-US/Content/FreshInstall.json -Destination $defaultJsonConfig
-                Copy-Item en-US/Content/.vs_answers/* -Destination $env:USERPROFILE/.freshBuild/.vs_answers
+                New-Item $env:USERPROFILE/.freshBuild -ItemType Directory -ErrorAction SilentlyContinue
+                Invoke-WebRequest `
+                    -Uri https://gist.githubusercontent.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/5af435625e7ae6347534527d55afa64f575e879f/FreshInstall.json `
+                    -OutFile $defaultJsonConfig                
             } else {
                 return -1;
             }
         }
 
-        $items = Get-Content $jsonConfig | ConvertFrom-Json
+        $items = (Get-Content $jsonConfig | ConvertFrom-Json).items
 
         if (-not $Search) {
             $downloadFolder = "$env:USERPROFILE/.freshBuild/downloads"
