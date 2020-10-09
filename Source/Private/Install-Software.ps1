@@ -22,7 +22,7 @@ function Install-Software{
         }
 
         "choco" { 
-            $item.command="choco";
+            $item.command="cinst";
             $result = Get-ByChocolatey $item 
             if($result) {
                 Write-Host $result;
