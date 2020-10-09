@@ -23,7 +23,7 @@ function Install-Software{
             try{
                 if($item.url.length -gt 0)
                 {
-                    Get-ByDownloadedInstaller $item
+                    Get-ByInstaller $item
                 } elseif($item.script) {
                     Get-ByScript $item
                 } elseif($item.command) {
