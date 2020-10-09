@@ -1,4 +1,5 @@
 function Search-FreshBuild {
+    [CmdletBinding()]
     param(
         [string]$jsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json",
         [string]$Exclude = $null,

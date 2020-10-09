@@ -14,7 +14,9 @@ param(
 )
 # Sanitize parameters to pass to Build-Module
 $ErrorActionPreference = "Stop"
-Push-Location $PSScriptRoot -StackName BuildBuildModule
+Push-Location $PSScriptRoot -StackName FreshBuildStackFrame
+
+$ModuleName = 'FreshBuild'
 
 if (-not $Semver) {
     if ($semver = gitversion -showvariable SemVer) {
@@ -31,19 +33,23 @@ try {
         Get-Content -Encoding UTF8 -Delimiter ([char]0)
     $Source += "`nExport-ModuleMember -Function *-*"
 
-    Get-Module ModuleBuilderBootstrap -ErrorAction Ignore | Remove-Module
-    New-Module ModuleBuilderBootstrap ([ScriptBlock]::Create($Source)) |
+    Get-Module $ModuleName -ErrorAction Ignore | Remove-Module
+    New-Module $ModuleName ([ScriptBlock]::Create($Source)) |
         Import-Module -Verbose:$false -DisableNameChecking
 
+    $item = Get-Item Source/build.psd1
+    $fullPath = $item.FullName;
+
     # Build new output
+    Import-Module ModuleBuilder
     $ParameterString = $PSBoundParameters.GetEnumerator().ForEach{ '-' + $_.Key + " '" + $_.Value + "'" } -join " "
-    Write-Verbose "Build-Module Source\build.psd1 $($ParameterString) -Target CleanBuild"
-    ModuleBuilderBootstrap\Build-Module -SourcePath Source\build.psd1 @PSBoundParameters -Target CleanBuild -Passthru -OutVariable BuildOutput | Split-Path
+    Write-Verbose "Build-Module $fullPath $($ParameterString) -Target CleanBuild"
+    Build-Module -SourcePath $fullPath @PSBoundParameters -Target CleanBuild -Passthru -OutVariable BuildOutput | Split-Path
     Write-Verbose "Module build output in $(Split-Path $BuildOutput.Path)"
 
     # Clean up environment
-    Remove-Module ModuleBuilderBootStrap -ErrorAction SilentlyContinue -Verbose:$false
+    Remove-Module $ModuleName -ErrorAction SilentlyContinue -Verbose:$false
 
 } finally {
-    Pop-Location -StackName BuildBuildModule
+    Pop-Location -StackName FreshBuildStackFrame
 }
