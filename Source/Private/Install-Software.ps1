@@ -4,8 +4,9 @@ function Install-Software{
     )
     Write-Host $Item
 
-    switch($Item.command){
+    switch($Item.source){
         "winget" { 
+            $item.command="winget";
             $result = Get-ByWinget $item 
             if($result) {
                 Write-Host $result;
@@ -13,7 +14,16 @@ function Install-Software{
         }
 
         "scoop" { 
+            $item.command="scoop";
             $result = Get-ByScoop $item 
+            if($result) {
+                Write-Host $result;
+            }
+        }
+
+        "choco" { 
+            $item.command="choco";
+            $result = Get-ByChocolatey $item 
             if($result) {
                 Write-Host $result;
             }
