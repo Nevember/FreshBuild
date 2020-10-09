@@ -20,18 +20,27 @@ function Get-ByInstaller {
 
         Remove-Item $stdError, $stdOut -ErrorAction SilentlyContinue
 
+        $argList = @()
+
         switch ($Item.command) {
             'msiexec' { 
-                $parameters = @("/package", $path) + $parameters;
+                $argList = @("/package", $path) + $parameters;
                 $path = (Get-Command $Item.command).Source; 
             }                    
+            
+            default {
+                if($parameters) {
+                    $argList += $parameters;
+                }
+            }
         }
 
+    
         if($path){
             if($Item.elevate){
                 $process = Start-Process -FilePath $path `
                     -Verb RunAs `
-                    -ArgumentList $parameters `
+                    -ArgumentList $argList `
                     -RedirectStandardOutput $stdOut `
                     -RedirectStandardError $stdError `
                     -Wait `
@@ -39,7 +48,7 @@ function Get-ByInstaller {
             } else {
                 $process = Start-Process -FilePath $path `
                     -NoNewWindow `
-                    -ArgumentList $parameters `
+                    -ArgumentList $argList `
                     -RedirectStandardOutput $stdOut `
                     -RedirectStandardError $stdError `
                     -Wait `

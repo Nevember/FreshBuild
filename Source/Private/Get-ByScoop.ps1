@@ -4,11 +4,17 @@ function Get-ByScoop {
     )
     if($item.command -ne 'scoop') { throw ("Wrong method.  Expected 'scoop', received '{0}'" -f $item.command)}
     $command = (Get-Command $item.command).Source;
+
+    $argList = @()
+    if($item.parameters) {
+        $argList += $item.parameters;
+    }
+
     if($command) {
         if($item.elevate){
-            return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $parameters
+            return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $argList
         } else {
-            return Start-Process -Wait -NoNewWindow -FilePath $command -ArgumentList $parameters
+            return Start-Process -Wait -NoNewWindow -FilePath $command -ArgumentList $argList
         }
     } else {
         throw ("No command matching {0} was found." -f $item.command);
