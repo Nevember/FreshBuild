@@ -17,7 +17,7 @@ function Start-FreshBuild {
                 Set-Location (Get-Module -Name "FreshBuild").Path
                 New-Item $env:USERPROFILE/.freshBuild -ItemType Directory -ErrorAction SilentlyContinue
                 Invoke-WebRequest `
-                    -Uri https://gist.githubusercontent.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/5af435625e7ae6347534527d55afa64f575e879f/FreshInstall.json `
+                    -Uri https://gist.githubusercontent.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/63a2717e56fe4cc876f419660392d8a7aca12879/FreshInstall.json `
                     -OutFile $defaultJsonConfig                
             }
             else {
