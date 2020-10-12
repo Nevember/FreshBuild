@@ -4,6 +4,6 @@ function Install-Scoop {
         "source": "direct",
         "script": "iwr -useb get.scoop.sh | iex" }' | ConvertFrom-Json);
 
-    Get-ByInstaller $item;
+    Get-ByScript $item;
 }
 
