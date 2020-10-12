@@ -1,6 +1,11 @@
 {
     "items": [
         {
+            "name": "Scoop",
+            "source": "direct",
+            "script": "iwr -useb get.scoop.sh | iex"
+        },
+        {
             "name": "Chocolatey",
             "source": "direct",
             "script": "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
@@ -10,13 +15,6 @@
             "name": "gsudo",
             "source": "choco",
             "elevate": true
-        },
-        {
-            "name": "Scoop",
-            "source": "direct",
-            "url": "",
-            "script": "iwr -useb get.scoop.sh | iex",
-            "parameters": []
         },
         {
             "name": "Git",
@@ -68,7 +66,7 @@
             "source": "winget"
         },
         {
-            "name": "Visual Studio 2019 Community Preview",
+            "name": "Visual Studio 2019 Community Preview Installer",
             "source": "direct",
             "url": "https://download.visualstudio.microsoft.com/download/pr/9905728c-bf7d-4461-8331-4d9acac68450/cd058ea119e40c80b3800b73804bfdb61e75aa242c335ade0d988430582cb7d0/vs_Community.exe",
             "filename": "vs_Community.exe",
@@ -80,22 +78,6 @@
                 "--norestart",
                 "--nickname",
                 "2019-Pre",
-                "--wait"
-            ]
-        },
-        {
-            "name": "Visual Studio 2019 Community",
-            "source": "direct",
-            "url": "",
-            "script": "./downloads/vs_Community.exe",
-            "parameters": [
-                "--installPath",
-                "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community",
-                "--all",
-                "--passive",
-                "--norestart",
-                "--nickname",
-                "2019-Comm",
                 "--wait"
             ]
         },
@@ -172,7 +154,7 @@
             "source": "winget"
         },
         {
-            "name": "M.A.T.",
+            "name": "Multilingual App Toolkit - App Localization",
             "source": "winget"
         }
     ],

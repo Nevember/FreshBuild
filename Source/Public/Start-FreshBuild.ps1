@@ -3,7 +3,8 @@ function Start-FreshBuild {
     param(
         [string]$jsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json",
         [string]$Exclude = $null,
-        [string]$Include = $null
+        [string]$Include = $null,
+        [switch]$Step = $false
     )
 
     Push-Location
@@ -18,7 +19,8 @@ function Start-FreshBuild {
                 Invoke-WebRequest `
                     -Uri https://gist.githubusercontent.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/5af435625e7ae6347534527d55afa64f575e879f/FreshInstall.json `
                     -OutFile $defaultJsonConfig                
-            } else {
+            }
+            else {
                 return -1;
             }
         }
@@ -43,6 +45,9 @@ function Start-FreshBuild {
                         Write-Host ("{0}: Finished Installation." -f $item.name)
                         Write-Host
                     }
+                }
+                if ($Step) {
+                    Read-Host "Hit enter for next step..."
                 }
             }
         }
