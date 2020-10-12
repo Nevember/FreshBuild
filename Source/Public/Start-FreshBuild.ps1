@@ -15,7 +15,7 @@ function Start-FreshBuild {
     Push-Location
 
     try {
-        $jsonUrl = https://gist.github.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/
+        $jsonUrl = "https://gist.github.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/"
         $defaultJsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json";
 
         if($UpdateJson) {
