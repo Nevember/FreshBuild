@@ -7,7 +7,8 @@ function Start-FreshBuild {
         [switch]$Step = $false,
         [switch]$InstallWinGet=$false,
         [switch]$InstallChocolatey=$false,
-        [switch]$InstallScoop=$false
+        [switch]$InstallScoop=$false,
+        [switch]$NoScript=$false
     )
 
     Push-Location
@@ -35,6 +36,8 @@ function Start-FreshBuild {
         if($InstallWinGet) {Install-WinGet}
         if($InstallChocolatey) {Install-Chocolatey}
         if($InstallScoop) {Install-Scoop}
+
+        if($NoScript) {return 0;}
 
         if (-not (Test-Path $downloadFolder)) {
             New-Item $downloadFolder -ItemType Directory
