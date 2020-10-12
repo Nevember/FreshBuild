@@ -4,9 +4,9 @@ function Get-ByWinget {
     )
 
     if($item.parameters){
-        $parameters = @("install", $item.name, $item.parameters)
+        $parameters = @("install", "`"" + $item.name + "`"", $item.parameters)
     } else {
-        $parameters = @("install", $item.name)
+        $parameters = @("install", "`"" + $item.name + "`"")
     }
 
     if($command) {
