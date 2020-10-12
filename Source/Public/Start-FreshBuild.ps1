@@ -27,28 +27,27 @@ function Start-FreshBuild {
 
         $items = (Get-Content $jsonConfig | ConvertFrom-Json).items
 
-        if (-not $Search) {
-            $downloadFolder = "$env:USERPROFILE/.freshBuild/downloads"
+        $downloadFolder = "$env:USERPROFILE/.freshBuild/downloads"
 
-            if (-not (Test-Path $downloadFolder)) {
-                New-Item $downloadFolder -ItemType Directory
+        if (-not (Test-Path $downloadFolder)) {
+            New-Item $downloadFolder -ItemType Directory
+        }
+
+        foreach ($item in $items) {
+            Write-Host $item.name
+            if (-not ($item -is [string])) {
+                if ((-not($Exclude -and ($item.name -Match $Exclude))) -and 
+                    (($null -eq $Include) -or 
+                        ($item.name -match $Include))) {
+                    Write-Host ("{0}: Beginning Installation." -f $item.name)
+                    [PSObject]$typed = $item;
+                    Install-Software -Item $typed
+                    Write-Host ("{0}: Finished Installation." -f $item.name)
+                    Write-Host
+                }
             }
-
-            foreach ($item in $items) {
-                if (-not ($item -is [string])) {
-                    if ((-not($Exclude -and ($item.name -Match $Exclude))) -and 
-                        (($null -eq $Include) -or 
-                            ($item.name -match $Include))) {
-                        Write-Host ("{0}: Beginning Installation." -f $item.name)
-                        [PSObject]$typed = $item;
-                        Install-Software -Item $typed
-                        Write-Host ("{0}: Finished Installation." -f $item.name)
-                        Write-Host
-                    }
-                }
-                if ($Step) {
-                    Read-Host "Hit enter for next step..."
-                }
+            if ($Step) {
+                Read-Host "Hit enter for next step..."
             }
         }
     }

@@ -6,6 +6,8 @@ function Get-ByChocolatey {
 
     $parameters = @("install", $item.name, $item.parameters)
 
+    Write-Host ("{0}: Parameters: {1}" -f $Item.name, $parameters)
+
     if($command) {
         if($item.elevate){
             return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $parameters
