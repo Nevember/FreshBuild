@@ -4,7 +4,10 @@ function Start-FreshBuild {
         [string]$jsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json",
         [string]$Exclude = $null,
         [string]$Include = $null,
-        [switch]$Step = $false
+        [switch]$Step = $false,
+        [switch]$InstallWinGet=$false,
+        [switch]$InstallChocolatey=$false,
+        [switch]$InstallScoop=$false
     )
 
     Push-Location
@@ -28,6 +31,10 @@ function Start-FreshBuild {
         $items = (Get-Content $jsonConfig | ConvertFrom-Json).items
 
         $downloadFolder = "$env:USERPROFILE/.freshBuild/downloads"
+
+        if($InstallWinGet) {Install-WinGet}
+        if($InstallChocolatey) {Install-Chocolatey}
+        if($InstallScoop) {Install-Scoop}
 
         if (-not (Test-Path $downloadFolder)) {
             New-Item $downloadFolder -ItemType Directory
