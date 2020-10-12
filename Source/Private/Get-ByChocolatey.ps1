@@ -2,7 +2,7 @@ function Get-ByChocolatey {
     param(
         [PSObject]$Item=$null
     )
-    $command = (Get-Command cinst).Source;
+    $command = (Get-Command $command).Source;
 
     $parameters = @("install", $item.name, $item.parameters)
 

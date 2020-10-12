@@ -2,7 +2,7 @@ function Get-ByScoop {
     param(
         [PSObject]$Item=$null
     )
-    $command = (Get-Command scoop).Source;
+    $command = (Get-Command $command).Source;
 
     $parameters = @("install", $item.name, $item.parameters)
 
