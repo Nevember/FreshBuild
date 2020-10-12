@@ -2,8 +2,13 @@ function Get-ByWinget {
     param(
         [PSObject]$Item=$null
     )
-    #$command = (Get-Command $command).Source;
-    $parameters = @("install", $item.name, $item.parameters)
+
+    if($item.parameters){
+        $parameters = @("install", $item.name, $item.parameters)
+    } else {
+        $parameters = @("install", $item.name)
+    }
+
     if($command) {
         if($item.elevate){
             return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $parameters

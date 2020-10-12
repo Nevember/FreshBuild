@@ -1,10 +1,16 @@
+using System.Linq;
+
 function Get-ByChocolatey {
     param(
         [PSObject]$Item=$null
     )
     #$command = (Get-Command $command).Source;
 
-    $parameters = @("install", $item.name, $item.parameters)
+    if($item.parameters){
+        $parameters = @("install", $item.name, $item.parameters)
+    } else {
+        $parameters = @("install", $item.name)
+    }
 
     Write-Host ("{0}: Parameters: {1}" -f $Item.name, $parameters)
 

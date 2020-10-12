@@ -4,7 +4,11 @@ function Get-ByScoop {
     )
     #$command = (Get-Command $command).Source;
 
-    $parameters = @("install", $item.name, $item.parameters)
+    if($item.parameters){
+        $parameters = @("install", $item.name, $item.parameters)
+    } else {
+        $parameters = @("install", $item.name)
+    }
 
     if($command) {
         if($item.elevate){
