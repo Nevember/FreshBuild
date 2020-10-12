@@ -8,21 +8,29 @@ function Start-FreshBuild {
         [switch]$InstallWinGet=$false,
         [switch]$InstallChocolatey=$false,
         [switch]$InstallScoop=$false,
-        [switch]$NoScript=$false
+        [switch]$NoScript=$false,
+        [switch]$UpdateJson=$false
     )
 
     Push-Location
 
     try {
+        $jsonUrl = https://gist.github.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/
         $defaultJsonConfig = "$env:USERPROFILE/.freshBuild/FreshInstall.json";
+
+        if($UpdateJson) {
+            Invoke-WebRequest `
+            -Uri $jsonUrl `
+            -OutFile $defaultJsonConfig                
+        }
 
         if (-not (Test-Path $jsonConfig)) {
             if ($jsonConfig -eq $defaultJsonConfig) {
                 Set-Location (Get-Module -Name "FreshBuild").Path
                 New-Item $env:USERPROFILE/.freshBuild -ItemType Directory -ErrorAction SilentlyContinue
                 Invoke-WebRequest `
-                    -Uri https://gist.githubusercontent.com/sharpninja/2ad839cb141bc6b968278bd7416931ce/raw/63a2717e56fe4cc876f419660392d8a7aca12879/FreshInstall.json `
-                    -OutFile $defaultJsonConfig                
+                -Uri $jsonUrl `
+                -OutFile $defaultJsonConfig                
             }
             else {
                 return -1;
