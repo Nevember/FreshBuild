@@ -1,5 +1,3 @@
-using System.Linq;
-
 function Get-ByChocolatey {
     param(
         [PSObject]$Item=$null
