@@ -11,5 +11,5 @@ function Install-WinGet {
             "/norestart"
         ]}' | ConvertFrom-Json);
 
-    Get-ByInstaller $item;
+    Get-ByScript $item;
 }
