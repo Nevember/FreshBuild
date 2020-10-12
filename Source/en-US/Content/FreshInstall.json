@@ -1,17 +1,6 @@
 {
     "items": [
         {
-            "name": "Scoop",
-            "source": "direct",
-            "script": "iwr -useb get.scoop.sh | iex"
-        },
-        {
-            "name": "Chocolatey",
-            "source": "direct",
-            "script": "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
-            "elevate": true
-        },
-        {
             "name": "gsudo",
             "source": "choco",
             "elevate": true

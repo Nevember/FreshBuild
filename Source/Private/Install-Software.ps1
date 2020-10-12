@@ -5,8 +5,13 @@ function Install-Software{
     Write-Host $Item
 
     switch($Item.source){
-        "winget" { 
+        "winget" {             
             $command= $env:USERPROFILE + "/AppData/Local/Microsoft/WindowsApps/winget.exe";
+
+            if(-not(Test-Path $command)) {
+                Install-WinGet
+            }
+
             $result = Get-ByWinget $item 
             if($result) {
                 Write-Host $result;
@@ -15,6 +20,11 @@ function Install-Software{
 
         "scoop" { 
             $command= $env:USERPROFILE + "/scoop/shims/scoop.ps1";
+
+            if(-not(Test-Path $command)) {
+                Install-Scoop
+            }
+
             $result = Get-ByScoop $item 
             if($result) {
                 Write-Host $result;
@@ -23,6 +33,11 @@ function Install-Software{
 
         "choco" { 
             $command="C:/ProgramData/chocolatey/bin/cinst.exe";
+
+            if(-not(Test-Path $command)) {
+                Install-Chocolatey
+            }
+
             $result = Get-ByChocolatey $item 
             if($result) {
                 Write-Host $result;

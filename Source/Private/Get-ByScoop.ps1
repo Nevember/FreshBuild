@@ -2,19 +2,17 @@ function Get-ByScoop {
     param(
         [PSObject]$Item=$null
     )
-    #$command = (Get-Command $command).Source;
+    $parameters = @("-c", $command, "install", $item.name)
 
     if($item.parameters){
-        $parameters = @("install", "`"" + $item.name + "`"", $item.parameters)
-    } else {
-        $parameters = @("install", "`"" + $item.name + "`"")
+        $parameters += [string[]]$item.parameters;
     }
 
     if($command) {
         if($item.elevate){
-            return Start-Process -Wait -Verb RunAs -FilePath $command -ArgumentList $parameters
+            return Start-Process -Wait -Verb RunAs -FilePath powershell -ArgumentList $parameters
         } else {
-            return Start-Process -Wait -NoNewWindow -FilePath $command -ArgumentList $parameters
+            return Start-Process -Wait -NoNewWindow -FilePath powershell -ArgumentList $parameters
         }
     } else {
         throw ("No command matching {0} was found." -f $item.command);

@@ -2,12 +2,10 @@ function Get-ByChocolatey {
     param(
         [PSObject]$Item=$null
     )
-    #$command = (Get-Command $command).Source;
+    $parameters = @("install", $item.name, "-y")
 
     if($item.parameters){
-        $parameters = @("install", "`"" + $item.name + "`"", $item.parameters)
-    } else {
-        $parameters = @("install", "`"" + $item.name + "`"")
+        $parameters += [string[]]$item.parameters;
     }
 
     Write-Host ("{0}: Parameters: {1}" -f $Item.name, $parameters)

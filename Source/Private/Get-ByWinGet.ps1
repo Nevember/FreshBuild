@@ -2,11 +2,10 @@ function Get-ByWinget {
     param(
         [PSObject]$Item=$null
     )
+    $parameters = @("install", $item.name)
 
     if($item.parameters){
-        $parameters = @("install", "`"" + $item.name + "`"", $item.parameters)
-    } else {
-        $parameters = @("install", "`"" + $item.name + "`"")
+        $parameters += [string[]]$item.parameters;
     }
 
     if($command) {
