@@ -2,7 +2,7 @@ function Get-ByWinget {
     param(
         [PSObject]$Item=$null
     )
-    $command = (Get-Command $command).Source;
+    #$command = (Get-Command $command).Source;
     $parameters = @("install", $item.name, $item.parameters)
     if($command) {
         if($item.elevate){
