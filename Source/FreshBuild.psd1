@@ -27,7 +27,7 @@ CompanyName = 'Gateway Programming School, Inc.'
 Copyright = '2020'
 
 # Description of the functionality provided by this module
-Description = 'Build up a Fresh System'
+Description = 'Build up a Fresh System from WinGet, Scoop, Chocolatey and downloadable installers and scripts.'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @()
@@ -68,16 +68,13 @@ PrivateData = @{
         Tags = @("New-System", "Scoop", "WinGet", "Chocolatey", "Choco", "Cinst")
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/PS-Services/FreshBuild/LICENSE.md'
+        LicenseUri = 'https://github.com/PS-Services/FreshBuild/LICENSE'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/PS-Services/FreshBuild'
 
         # A URL to an icon representing this module.
         # IconUri = ''
-
-        # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/PS-Services/FreshBuild/ReleaseNotes.md'
 
     } # End of PSData hashtable
 
