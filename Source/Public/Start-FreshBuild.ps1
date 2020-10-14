@@ -5,6 +5,9 @@ function Start-FreshBuild {
         [string]$Exclude = $null,
         [string]$Include = $null,
         [switch]$Step = $false,
+        [switch]$UninstallWinGet=$false,
+        [switch]$UninstallChocolatey=$false,
+        [switch]$UninstallScoop=$false,
         [switch]$InstallWinGet=$false,
         [switch]$InstallChocolatey=$false,
         [switch]$InstallScoop=$false,
@@ -40,6 +43,10 @@ function Start-FreshBuild {
         $items = (Get-Content $jsonConfig | ConvertFrom-Json).items
 
         $downloadFolder = "$env:USERPROFILE/.freshBuild/downloads"
+
+        if($UninstallWinGet) {Uninstall-WinGet}
+        if($UninstallChocolatey) {Uninstall-Chocolatey}
+        if($UninstallScoop) {Uninstall-Scoop}
 
         if($InstallWinGet) {Install-WinGet}
         if($InstallChocolatey) {Install-Chocolatey}
