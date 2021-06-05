@@ -6,7 +6,12 @@ function Initialize-FreshBuild {
         [switch]$InstallScoop = $false
     )
 
-    $jsonFile = "$env:USERPROFILE/.freshbuild/PackageManagers.json"
+    $freshbuildDir = Join-Path $Env:USERPROFILE ".freshbuild"
+    $jsonFile = Join-Path $FreshBuildDir "PackageManagers.json"
+    
+    if (!(Test-Path $freshbuildDir)) {
+        $null = New-Item -Path $freshbuildDir -ItemType Directory -Force
+    }
 
     if (Test-Path $jsonFile) {
         [string[]]$installed = Get-Content $jsonFile | ConvertFrom-Json;
